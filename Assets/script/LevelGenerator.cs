@@ -28,6 +28,7 @@ public class LevelGenerator : MonoBehaviour
      };
     void Start()
     {
+        myMap.transform.SetPositionAndRotation(Vector3.zero,Quaternion.identity);
         Destroy(showingMap);
         creatMap();
     }
