@@ -7,7 +7,8 @@ public class LevelGenerator : MonoBehaviour
 {
     public Tilemap myMap;
     public GameObject showingMap;
-    public Sprite[] wallblock;
+    private GameObject[,] mapObject = new GameObject[30, 32];
+    public GameObject[] prefab;
     private int[,] levelmap =
     {
       {1,2,2,2,2,2,2,2,2,2,2,2,2,7},
@@ -28,7 +29,6 @@ public class LevelGenerator : MonoBehaviour
      };
     void Start()
     {
-        myMap.transform.SetPositionAndRotation(Vector3.zero,Quaternion.identity);
         Destroy(showingMap);
         creatMap();
     }
@@ -42,36 +42,57 @@ public class LevelGenerator : MonoBehaviour
         {
             for (int x = 0; x < levelmap.GetLength(1); x++)
             {
-                Tile tile = ScriptableObject.CreateInstance<Tile>();
-                tile.sprite = selectSprite(y, x);
                 float angle = angleCounter(y, x);
-                tile.transform = rotating(angle);
-                myMap.SetTile(new Vector3Int(-levelmap.GetLength(1) + x  , levelmap.GetLength(0) - y - 1, 0), tile);
-                tile.transform = mirrorToRight(angle);
-                myMap.SetTile(new Vector3Int(levelmap.GetLength(1) - x -1 , levelmap.GetLength(0) - y - 1, 0), tile);
-                tile.transform = mirrorToDown(angle);
-                myMap.SetTile(new Vector3Int(-levelmap.GetLength(1) + x  , -levelmap.GetLength(0) + y + 1, 0), tile);
-                tile.transform = mirrorToRightDown(angle);
-                myMap.SetTile(new Vector3Int(levelmap.GetLength(1) - x -1 , -levelmap.GetLength(0) + y + 1, 0), tile);
+                if (levelmap[y, x] != 0)
+                {
+                    mapObject[y, x] = Instantiate(selectObject(y, x));
+                    mapObject[y, x].transform.parent = transform;
+                    mapObject[y, x].transform.position = new Vector3(-levelmap.GetLength(1) + x , levelmap.GetLength(0) - y - 1, 0);
+                    mapObject[y, x].transform.Rotate(0, 0, angle, Space.Self);
+                }
+                // map to right
+                if (levelmap[y, x] != 0)
+                {
+                    mapObject[y, mapObject.GetLength(1) - x - 1] = Instantiate(selectObject(y, x));
+                    mapObject[y, mapObject.GetLength(1) - x - 1].transform.parent = transform;
+                    mapObject[y, mapObject.GetLength(1) - x - 1].transform.position = new Vector3(levelmap.GetLength(1) - x -1, levelmap.GetLength(0) - y - 1, 0);
+                    mapObject[y, mapObject.GetLength(1) - x - 1].transform.Rotate(0, 180, angle, Space.Self);
+                }
+                // map to down
+                if (levelmap[y, x] != 0)
+                {
+                    mapObject[mapObject.GetLength(0) - y - 1, x] = Instantiate(selectObject(y, x));
+                    mapObject[mapObject.GetLength(0) - y - 1, x].transform.parent = transform;
+                    mapObject[mapObject.GetLength(0) - y - 1, x].transform.position = new Vector3(-levelmap.GetLength(1) + x , -levelmap.GetLength(0) + y + 1, 0);
+                    mapObject[mapObject.GetLength(0) - y - 1, x].transform.Rotate(180, 0, angle, Space.Self);
+                }
+                //map to down right
+                if (levelmap[y, x] != 0)
+                {
+                    mapObject[mapObject.GetLength(0) - y - 1, mapObject.GetLength(1) - x - 1] = Instantiate(selectObject(y, x));
+                    mapObject[mapObject.GetLength(0) - y - 1, mapObject.GetLength(1) - x - 1].transform.parent = transform;
+                    mapObject[mapObject.GetLength(0) - y - 1, mapObject.GetLength(1) - x - 1].transform.position = new Vector3(levelmap.GetLength(1) - x -1, -levelmap.GetLength(0) + y + 1, 0);
+                    mapObject[mapObject.GetLength(0) - y - 1, mapObject.GetLength(1) - x - 1].transform.Rotate(180, 180, angle, Space.Self);
+                }
             }
 
         }
     }
 
-    Sprite selectSprite(int y, int x)
+    GameObject selectObject(int y, int x)
     {
         switch (levelmap[y, x])
         {
-            case 1: return wallblock[0];
-            case 2: return wallblock[1];
-            case 3: return wallblock[2];
-            case 4: return wallblock[3];
-            case 5: return wallblock[4];
-            //case 6: return wallblock[5];
-            case 7: return wallblock[6];
+            case 0: return null;
+            case 1: return prefab[0];
+            case 2: return prefab[1];
+            case 3: return prefab[2];
+            case 4: return prefab[3];
+            case 5: return prefab[4];
+            case 6: return prefab[5];
+            case 7: return prefab[6];
         }
         return null;
-
     }
 
     float angleCounter(int y, int x)
@@ -184,29 +205,4 @@ public class LevelGenerator : MonoBehaviour
         { return 0; }
     }
 
-    Matrix4x4 mirrorToRight(float D)
-    {
-        Quaternion an = Quaternion.Euler(0, 180, D);
-        Matrix4x4 m = Matrix4x4.TRS(Vector3.zero, an, Vector3.one);
-        return m;
-    }
-    Matrix4x4 mirrorToDown(float D)
-    {
-        Quaternion an = Quaternion.Euler(180, 0, D);
-        Matrix4x4 m = Matrix4x4.TRS(Vector3.zero, an, Vector3.one);
-        return m;
-    }
-    Matrix4x4 mirrorToRightDown(float D)
-    {
-        Quaternion an = Quaternion.Euler(180, 180, D);
-        Matrix4x4 m = Matrix4x4.TRS(Vector3.zero, an, Vector3.one);
-        return m;
-    }
-
-    Matrix4x4 rotating(float D)
-    {
-        Quaternion an = Quaternion.Euler(0, 0, D);
-        Matrix4x4 m = Matrix4x4.TRS(Vector3.zero, an, Vector3.one);
-        return m;
-    }
 }
