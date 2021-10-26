@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Tweener : MonoBehaviour {
     //private Tween activeTween;
@@ -40,10 +41,27 @@ public class Tweener : MonoBehaviour {
         }
         return false;
     }
-
+    public bool AddTween(RectTransform targetObject, Vector3 startPos, Vector3 endPos, float duration)
+    {
+        if (!TweenExists(targetObject))
+        {
+            activeTweens.Add(new Tween(targetObject, startPos, endPos, Time.time, duration));
+            return true;
+        }
+        return false;
+    }
 
     public bool TweenExists(Transform target) {
         foreach (Tween activeTween in activeTweens) {
+            if (activeTween.Target.transform == target)
+                return true;
+        }
+        return false;
+    }
+    public bool TweenExists(RectTransform target)
+    {
+        foreach (Tween activeTween in activeTweens)
+        {
             if (activeTween.Target.transform == target)
                 return true;
         }
