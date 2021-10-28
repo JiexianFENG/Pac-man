@@ -11,8 +11,7 @@ GameObject:
   - component: {fileID: 5284340102747173762}
   - component: {fileID: 1730385692487679597}
   - component: {fileID: 7633293218519932321}
-  - component: {fileID: 4631022955046136484}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: new wall_7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,24 +109,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!50 &4631022955046136484
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8701259362695521853}
-  m_BodyType: 2
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 3

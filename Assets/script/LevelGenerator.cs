@@ -63,7 +63,7 @@ public class LevelGenerator : MonoBehaviour
                 {
                     mapObject[mapObject.GetLength(0) - y - 1, x] = Instantiate(selectObject(y, x));
                     mapObject[mapObject.GetLength(0) - y - 1, x].transform.parent = transform;
-                    mapObject[mapObject.GetLength(0) - y - 1, x].transform.position = new Vector3(-levelmap.GetLength(1) + x , -levelmap.GetLength(0) + y + 1, 0);
+                    mapObject[mapObject.GetLength(0) - y - 1, x].transform.position = new Vector3(-levelmap.GetLength(1) + x , -levelmap.GetLength(0) + y , 0);
                     mapObject[mapObject.GetLength(0) - y - 1, x].transform.Rotate(180, 0, angle, Space.Self);
                 }
                 //map to down right
@@ -71,7 +71,7 @@ public class LevelGenerator : MonoBehaviour
                 {
                     mapObject[mapObject.GetLength(0) - y - 1, mapObject.GetLength(1) - x - 1] = Instantiate(selectObject(y, x));
                     mapObject[mapObject.GetLength(0) - y - 1, mapObject.GetLength(1) - x - 1].transform.parent = transform;
-                    mapObject[mapObject.GetLength(0) - y - 1, mapObject.GetLength(1) - x - 1].transform.position = new Vector3(levelmap.GetLength(1) - x -1, -levelmap.GetLength(0) + y + 1, 0);
+                    mapObject[mapObject.GetLength(0) - y - 1, mapObject.GetLength(1) - x - 1].transform.position = new Vector3(levelmap.GetLength(1) - x -1, -levelmap.GetLength(0) + y , 0);
                     mapObject[mapObject.GetLength(0) - y - 1, mapObject.GetLength(1) - x - 1].transform.Rotate(180, 180, angle, Space.Self);
                 }
             }
